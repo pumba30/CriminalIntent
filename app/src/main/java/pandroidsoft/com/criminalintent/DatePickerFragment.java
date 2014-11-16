@@ -11,6 +11,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.DatePicker;
 
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -22,6 +23,7 @@ public class DatePickerFragment extends DialogFragment {
     public static final String EXTRA_DATE =
             "com.pandroid.criminalintent.date";
     private Date mDate;
+
 
     public static DatePickerFragment newInstance(Date date) {
         Bundle args = new Bundle();
@@ -70,6 +72,8 @@ public class DatePickerFragment extends DialogFragment {
 
             }
         });
+
+
         return new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .setTitle(R.string.date_picker_title)
