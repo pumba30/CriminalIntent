@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 
@@ -140,12 +141,11 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         CrimeFragment fragment = new CrimeFragment();
         fragment.setArguments(args);
         return fragment;
-
     }
 
 
     private void updateTime() {
-        String mTimeForm = DateFormat.format("hh:mm", mCrime.getTime()).toString();
+        String mTimeForm = DateFormat.format(" hh:mm", mCrime.getTime()).toString();
         mButtonTime.setText(mTimeForm);
     }
 
