@@ -1,5 +1,7 @@
 package pandroidsoft.com.criminalintent;
 
+import android.text.format.Time;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -13,6 +15,9 @@ public class Crime {
     private UUID mUUID;
     private String mTitle;
     private Date mDate; //дата преступления
+    private Date mTime;
+
+
     private boolean mSolved; //признак того, что преступление раскрыто
 
 
@@ -20,6 +25,8 @@ public class Crime {
         //генерирование уникального индетификатора
         mUUID = mUUID.randomUUID();
         mDate = new Date();
+        mTime = new Date();
+
     }
 
 
@@ -50,8 +57,17 @@ public class Crime {
     public void setSolved(boolean solved) {
         mSolved = solved;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return mTitle;
+    }
+
+    public Date getTime() {
+        return mTime;
+    }
+
+    public void setTime(Date time) {
+        mTime = time;
     }
 }

@@ -3,6 +3,7 @@ package pandroidsoft.com.criminalintent;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -18,11 +19,13 @@ import android.widget.TextView;
 import android.text.format.DateFormat;
 import android.support.v4.app.FragmentManager;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
 
 public class CrimeFragment extends android.support.v4.app.Fragment {
+
     private Crime mCrime;
     private TextView mTitleField;
     private Button mButtonDate;
@@ -30,8 +33,11 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
     public static final String EXTRA_CRIME_ID =
             "com.pandroidsoft.criminalintent.crime_id";
     public static final String DIALOG_DATE = "date";
+    public static final  String DIALOG_TIME = "time";
     public static final int REQUEST_DATE = 0;
+    private static final int REQUEST_TIME = 1;
     private String mFormDate;
+    private Button mButtonTime;
 
 
     @Override
@@ -44,11 +50,15 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
             mCrime.setDate(date);
             updateDate();
-
-
+        }
+        if(requestCode == REQUEST_TIME){
+            Date time = (Date) data.getSerializableExtra(TimePickerFragment.EXTRA_TIME);
+            mCrime.setTime(time);
+            updateTime();
         }
 
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,9 +92,8 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
         });
         // определили кнопку, установили текст, текстом вывели дату, заблокировали нажатие
         mButtonDate = (Button) view.findViewById(R.id.crime_date);
-
-
         updateDate();
+
         //mButtonDate.setEnabled(false); //теперь кнопка доступна
         mButtonDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +101,7 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
                 FragmentManager fragmentManager = getActivity()
                         .getSupportFragmentManager();
                 //DatePickerFragment dialog = new DatePickerFragment();
-                DatePickerFragment dialog = new DatePickerFragment().newInstance((mCrime.getDate()));
+                DatePickerFragment dialog = new DatePickerFragment().newInstance(mCrime.getDate());
                 dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
                 dialog.show(fragmentManager, DIALOG_DATE);
             }
@@ -109,6 +118,19 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
             }
         });
 
+        mButtonTime = (Button) view.findViewById(R.id.crime_time);
+        updateTime();
+        mButtonTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity()
+                        .getSupportFragmentManager();
+                TimePickerFragment dialog = new TimePickerFragment().newInstance(mCrime.getTime());
+                dialog.setTargetFragment(CrimeFragment.this, REQUEST_TIME);
+                dialog.show(fragmentManager, DIALOG_TIME);
+            }
+        });
+
         return view;
     }
 
@@ -122,9 +144,13 @@ public class CrimeFragment extends android.support.v4.app.Fragment {
     }
 
 
+    private void updateTime() {
+        String mTimeForm = DateFormat.format("hh:mm", mCrime.getTime()).toString();
+        mButtonTime.setText(mTimeForm);
+    }
 
     private void updateDate() {
-       // mFormDate = DateFormat.format("EEEEE,  MMM d, yyyy", mCrime.getDate()).toString();
-        mButtonDate.setText((mCrime.getDate()).toString());
+        mFormDate = DateFormat.format("EEEEE,  MMM d, yyyy", mCrime.getDate()).toString();
+        mButtonDate.setText(mFormDate);
     }
 }
