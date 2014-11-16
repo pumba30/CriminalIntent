@@ -51,7 +51,7 @@ public class CrimeListFragment extends ListFragment {
         startActivity(i);
        // Log.d(TAG, c.getTitle() + " был нажат");
     }
-
+//
 
     private class CrimeAdapter extends ArrayAdapter<Crime> {
 
